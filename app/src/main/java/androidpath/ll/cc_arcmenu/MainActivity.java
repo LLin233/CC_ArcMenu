@@ -1,38 +1,35 @@
 package androidpath.ll.cc_arcmenu;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
+        ArcMenu arcMenuRightBottom = (ArcMenu) findViewById(R.id.id_arcmenu1);
+        // add a MenuItem in code
+        ImageView people = new ImageView(this);
+        people.setImageResource(R.mipmap.composer_with);
+        people.setTag("People");
+        arcMenuRightBottom.addView(people);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        arcMenuRightBottom
+                .setOnMenuItemClickListener(new ArcMenu.OnMenuItemClickListener() {
+                    //Test menu status
+                    @Override
+                    public void onClick(View view, int pos) {
+                        Toast.makeText(MainActivity.this,
+                                pos + ":" + view.getTag(), Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                });
     }
 }
